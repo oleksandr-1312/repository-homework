@@ -47,10 +47,10 @@ class FileHandler:
         self.path = path
 
         if not os.path.exists(path):
-            raise FileNotFound(f"Файл не знайдено: {path}")
+            raise FileNotFound(f"File not found: {path}")
 
         if not path.endswith(".xml"):
-            raise FileCorrupted("Файл повинен бути XML")
+            raise FileCorrupted("File must be XML")
 
     @logged(FileCorrupted, mode="file")
     def read(self):
@@ -58,7 +58,7 @@ class FileHandler:
             with open(self.path, "r", encoding="utf-8") as f:
                 return f.read()
         except:
-            raise FileCorrupted("Помилка читання файлу")
+            raise FileCorrupted("Error reading file")
 
     @logged(FileCorrupted, mode="file")
     def write(self, content):
@@ -66,7 +66,7 @@ class FileHandler:
             with open(self.path, "w", encoding="utf-8") as f:
                 f.write(content)
         except:
-            raise FileCorrupted("Помилка запису у файл")
+            raise FileCorrupted("Error writing to file")
 
     @logged(FileCorrupted, mode="file")
     def append(self, content):
@@ -74,7 +74,7 @@ class FileHandler:
             with open(self.path, "a", encoding="utf-8") as f:
                 f.write(content)
         except:
-            raise FileCorrupted("Помилка дописування у файл")
+            raise FileCorrupted("Error appending to file")
 
 if __name__ == "__main__":
     try:
@@ -83,4 +83,4 @@ if __name__ == "__main__":
         fh.append("\n<test>123</test>")
         fh.write("<root>updated</root>")
     except FileError as e:
-        print("Помилка:", e)
+        print("Error:", e)
